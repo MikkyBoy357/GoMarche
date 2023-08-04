@@ -1,0 +1,22 @@
+{
+  "choose_language": "Choose your language",
+  "mobile_number": "Please enter your phone number",
+  "phone_number": "Phone Number",
+  "enter_otp": "Please enter the verification code sent to",
+  "login": "Login",
+  "units": "Units",
+  "quantity": "Quantity",
+  "total": "Total",
+  "confirm_order": "Confirm Order",
+  "waiting_for_order": "Waiting for Order",
+  "update_profile": "Update Profile",
+  "no_otp": "Didn't receive your code?",
+  "resend_otp": "Press here to resend code",
+  "home": "Home",
+  "cart": "Cart",
+  "profile": "Profile",
+  "name": "Name",
+  "language": "Language",
+  "location": "Location",
+  "store_name": "Store Name"
+}

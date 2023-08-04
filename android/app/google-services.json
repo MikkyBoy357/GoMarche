@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "167810309178",
+    "project_id": "gomarche-5345d",
+    "storage_bucket": "gomarche-5345d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167810309178:android:0eb12de7cf11edbc4a2903",
+        "android_client_info": {
+          "package_name": "com.mikkyboy.go_marche"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "167810309178-r3bpvgh2lk5t006mvku40c55earprpqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVPbUQJb7DZdkIo_m2V3kzo0T6ew5RSQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "167810309178-r3bpvgh2lk5t006mvku40c55earprpqv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

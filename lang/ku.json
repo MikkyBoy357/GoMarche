@@ -1,0 +1,22 @@
+{
+  "choose_language": "زمانێك هەلبژێرە",
+  "mobile_number": "تکایە ژمارەی مۆبایلەکەت بنووسە",
+  "phone_number": "ژمارەی مۆبایل",
+  "enter_otp": "تکایە ئەو کۆدە بنووسە کە بۆمان ناردی",
+  "login": "چونە ژوورەوە",
+  "units": "یەکەکان",
+  "quantity": "Quantity",
+  "total": "کۆی گشتی",
+  "confirm_order": "داواکاریەکت بنێرە",
+  "waiting_for_order": "چاوەرێی داواکاری",
+  "update_profile": "پرۆفایلت نوێ بکەوە",
+  "no_otp": "کۆدەکەت بۆ نەهات؟",
+  "resend_otp": "ئێرە داگرە بۆ ناردنەوەی کۆدەکە",
+  "home": "ماڵ",
+  "cart": "سەبەتە",
+  "profile": "پرۆفایل",
+  "name": "ناو",
+  "language": "زمان",
+  "location": "شوێن",
+  "store_name": "ناوی دوکان"
+}

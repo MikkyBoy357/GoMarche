@@ -1,0 +1,22 @@
+{
+  "choose_language": "اختر لغتك",
+  "mobile_number": "يرجى إدخال رقم الهاتف الخاص بك",
+  "phone_number": "رقم التليفون",
+  "enter_otp": "الرجاء إدخال رمز التحقق المرسل إلى",
+  "login": "تسجيل الدخول",
+  "units": "الوحدات",
+  "quantity": "كمية",
+  "total": "مجموع",
+  "confirm_order": "أكد الطلب",
+  "waiting_for_order": "في انتظار الطلب",
+  "update_profile": "تحديث الحساب",
+  "no_otp": "لم تستلم الرمز الخاص بك؟",
+  "resend_otp": "اضغط هنا لإعادة إرسال الرمز",
+  "home": "الرئیسیة",
+  "cart": "عربة",
+  "profile": "حساب",
+  "name": "اسم",
+  "language": "لغة",
+  "location": "موقع",
+  "store_name": "اسم المتجر"
+}
