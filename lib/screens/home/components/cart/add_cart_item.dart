@@ -6,7 +6,7 @@ class AddCartItem extends StatelessWidget {
   final String size;
   final int price;
   final String image;
-  final int units;
+  final int cartons;
   final String ordered;
   final String uid;
   final String adminId;
@@ -20,7 +20,7 @@ class AddCartItem extends StatelessWidget {
     required this.size,
     required this.price,
     required this.image,
-    required this.units,
+    required this.cartons,
     required this.ordered,
     required this.uid,
     required this.adminId,
@@ -43,7 +43,7 @@ class AddCartItem extends StatelessWidget {
             'size': size,
             'price': price,
             'image': image,
-            'units': units,
+            'cartons': cartons,
             'ordered': ordered,
             'uid': uid,
             'adminId': adminId,

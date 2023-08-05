@@ -30,13 +30,13 @@ class AddToCart extends StatefulWidget {
 }
 
 class _AddToCartState extends State<AddToCart> {
-  int units = 1;
+  int cartons = 1;
   int price = 0;
 
   @override
   void initState() {
     super.initState();
-    price = int.parse(widget.price) * units;
+    price = int.parse(widget.price) * cartons;
     setState(() {});
   }
 
@@ -82,7 +82,7 @@ class _AddToCartState extends State<AddToCart> {
               ),
             ),
             Text(
-              'IQD $price',
+              'CFA $price',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -113,7 +113,7 @@ class _AddToCartState extends State<AddToCart> {
                       child: Row(
                         children: [
                           Text(
-                            '$units',
+                            '$cartons',
                             style: TextStyle(
                               fontSize: 35,
                               fontWeight: FontWeight.bold,
@@ -123,10 +123,10 @@ class _AddToCartState extends State<AddToCart> {
                             width: 10,
                           ),
                           Text(
-                            units > 1
+                            cartons > 1
                                 ? AppLocalizations.of(context)!
-                                    .translate('units')
-                                : 'Unit',
+                                    .translate('cartons')
+                                : 'Carton',
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -141,9 +141,9 @@ class _AddToCartState extends State<AddToCart> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                units > 1 ? units = units - 1 : units = units;
-                                print('$units Units');
-                                price = int.parse(widget.price) * units;
+                                cartons > 1 ? cartons = cartons - 1 : cartons = cartons;
+                                print('$cartons Cartons');
+                                price = int.parse(widget.price) * cartons;
                               });
                             },
                             child: Icon(
@@ -157,9 +157,9 @@ class _AddToCartState extends State<AddToCart> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                units <= 99 ? units++ : units = units;
-                                print('$units Units');
-                                price = int.parse(widget.price) * units;
+                                cartons <= 99 ? cartons++ : cartons = cartons;
+                                print('$cartons Cartons');
+                                price = int.parse(widget.price) * cartons;
                                 print('Price $price');
                               });
                             },
@@ -184,7 +184,7 @@ class _AddToCartState extends State<AddToCart> {
                   size: widget.size,
                   price: price,
                   image: widget.image,
-                  units: units,
+                  cartons: cartons,
                   ordered: 'false',
                   uid: Const.uid,
                   adminId: widget.adminId,
@@ -214,7 +214,7 @@ class _AddToCartState extends State<AddToCart> {
                 //     "size": widget.size,
                 //     "price": price,
                 //     "image": widget.image,
-                //     "units": units,
+                //     "cartons": cartons,
                 //     "ordered": 'false',
                 //     "uid": Const.uid,
                 //     "adminId": widget.adminId,

@@ -34,8 +34,8 @@ class CategoryView extends StatelessWidget {
           children: [
             StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection(categoryName.toLowerCase())
-                  .where('categoryId', isEqualTo: categoryName.toLowerCase())
+                  .collection(categoryName)
+                  .where('categoryId', isEqualTo: categoryName)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
@@ -150,7 +150,7 @@ class CategoryView extends StatelessWidget {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      'IQD ',
+                                                      'CFA ',
                                                       style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:

@@ -27,7 +27,7 @@ class _CartState extends State<Cart> {
   var size;
   var orderedPrice;
   var image;
-  var units;
+  var cartons;
   var ordered;
   var uid;
   var adminId;
@@ -75,7 +75,7 @@ class _CartState extends State<Cart> {
   // size = product.size;
   // ordered = product.price;
   // image = product.image;
-  // units = product.units;
+  // cartons = product.cartons;
   // uid = product.uid;
   // adminId = product.adminId;
   // cartOrderId = 1;
@@ -88,7 +88,7 @@ class _CartState extends State<Cart> {
       size = product.size;
       ordered = product.price;
       image = product.image;
-      units = product.units;
+      cartons = product.cartons;
       uid = product.uid;
       adminId = product.adminId;
       cartOrderId = 1;
@@ -157,7 +157,7 @@ class _CartState extends State<Cart> {
         'size': size,
         'price': orderedPrice,
         'image': image,
-        'units': units,
+        'cartons': cartons,
         'ordered': ordered,
         'uid': uid,
         'adminId': adminId,
@@ -247,7 +247,7 @@ class _CartState extends State<Cart> {
                           size: myCart.products[index].size,
                           price: myCart.products[index].price,
                           image: myCart.products[index].image,
-                          units: myCart.products[index].units,
+                          cartons: myCart.products[index].cartons,
                         );
                       },
                     ),
@@ -281,10 +281,11 @@ class _CartState extends State<Cart> {
                   Row(
                     children: [
                       Text(
-                        'IQD ',
+                        'CFA ',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
+                          color: Colors.green[600]
                         ),
                       ),
                       Text(
@@ -292,6 +293,7 @@ class _CartState extends State<Cart> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
+                          color: Colors.green[700],
                         ),
                       ),
                     ],
@@ -309,14 +311,13 @@ class _CartState extends State<Cart> {
                     width: MediaQuery.of(context).size.width / 1.3,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        side: BorderSide(
-                          width: 2, // the thickness
-                          color: MyColors.blue1, // the color of the border
-                        ),
-                        textStyle: TextStyle(
-                          color: Colors.white,
-                        )
-                      ),
+                          side: BorderSide(
+                            width: 2, // the thickness
+                            color: MyColors.blue1, // the color of the border
+                          ),
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                          )),
                       onPressed: () {
                         // print(snapshot.data['location']);
                         if (profile == true) {

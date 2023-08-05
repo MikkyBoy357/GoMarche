@@ -13,10 +13,10 @@ class WaitingForOrders extends StatefulWidget {
   final String? size;
   final String? price;
   final String? image;
-  final String? units;
+  final String? cartons;
 
   const WaitingForOrders(
-      {Key? key,  this.name,  this.size,  this.price,  this.image,  this.units})
+      {Key? key,  this.name,  this.size,  this.price,  this.image,  this.cartons})
       : super(key: key);
   @override
   _WaitingForOrdersState createState() => _WaitingForOrdersState();
@@ -132,8 +132,8 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
                         price: snapshot.data!.docs[0]['cartFields'][0]['price'],
                         image: snapshot.data!.docs[index]['cartFields'][0]
                             ['image'],
-                        units: snapshot.data!.docs[index]['cartFields'][0]
-                            ['units'],
+                        cartons: snapshot.data!.docs[index]['cartFields'][0]
+                            ['cartons'],
                       );
                     },
                   ),

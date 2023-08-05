@@ -148,7 +148,7 @@ class BrandView extends StatelessWidget {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      'IQD ',
+                                                      'CFA ',
                                                       style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
