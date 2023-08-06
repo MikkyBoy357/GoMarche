@@ -4,6 +4,7 @@ import 'package:go_marche/design_system/button_widgets/buttons/blue_buttons/butt
 import 'package:go_marche/design_system/colors/colors.dart';
 import 'package:go_marche/design_system/const.dart';
 import 'package:go_marche/design_system/widgets/cart_item_cards/cart_item.dart';
+import 'package:go_marche/models/cart_item_model.dart';
 import 'package:go_marche/screens/home/main_screen.dart';
 
 import '../../app_localizations.dart';
@@ -16,8 +17,9 @@ class WaitingForOrders extends StatefulWidget {
   final String? cartons;
 
   const WaitingForOrders(
-      {Key? key,  this.name,  this.size,  this.price,  this.image,  this.cartons})
+      {Key? key, this.name, this.size, this.price, this.image, this.cartons})
       : super(key: key);
+
   @override
   _WaitingForOrdersState createState() => _WaitingForOrdersState();
 }
@@ -122,7 +124,7 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
                       print('<><><><><>${Const.myCartLength}');
-                      return CartItem(
+                      final CartItemModel cartItem = CartItemModel(
                         name: snapshot.data!.docs[index]['cartFields'][0]
                             ['name'],
                         // .map((e) => e.values.join())
@@ -134,6 +136,10 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
                             ['image'],
                         cartons: snapshot.data!.docs[index]['cartFields'][0]
                             ['cartons'],
+                      );
+
+                      return CartItemCard(
+                        cartItem: cartItem,
                       );
                     },
                   ),

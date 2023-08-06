@@ -5,6 +5,9 @@ import 'package:go_marche/design_system/button_widgets/buttons/blue_buttons/butt
 import 'package:go_marche/design_system/colors/colors.dart';
 import 'package:go_marche/design_system/const.dart';
 import 'package:go_marche/design_system/widgets/cart_item_cards/cart_item.dart';
+import 'package:go_marche/models/cart_item_model.dart';
+import 'package:go_marche/view_models/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../app_localizations.dart';
 import 'cart/cartList.dart';
@@ -58,6 +61,7 @@ class _AddToCartState extends State<AddToCart> {
                 borderRadius: BorderRadius.all(
                   Radius.circular(16),
                 ),
+                border: Border.all(color: Colors.grey),
                 image: DecorationImage(
                   image:
                       // widget.image == ''
@@ -86,7 +90,7 @@ class _AddToCartState extends State<AddToCart> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: MyColors.black2,
+                color: Colors.green[700],
               ),
             ),
             Column(
@@ -141,7 +145,9 @@ class _AddToCartState extends State<AddToCart> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                cartons > 1 ? cartons = cartons - 1 : cartons = cartons;
+                                cartons > 1
+                                    ? cartons = cartons - 1
+                                    : cartons = cartons;
                                 print('$cartons Cartons');
                                 price = int.parse(widget.price) * cartons;
                               });
@@ -179,29 +185,32 @@ class _AddToCartState extends State<AddToCart> {
             Button1(
               label: 'Add to Cart',
               onPressed: () {
-                final cartItem = CartItem(
+                final cartItem = CartItemModel(
                   name: widget.name,
                   size: widget.size,
                   price: price,
                   image: widget.image,
                   cartons: cartons,
-                  ordered: 'false',
-                  uid: Const.uid,
-                  adminId: widget.adminId,
-                  cartId: Const.cartItemId,
                 );
-                myCart.products.add(cartItem);
-                print(myCart.products[0].size);
-                print('Cart length: ${myCart.products.length}');
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return CupertinoAlertDialog(
-                      title: Text('SUCCESS'),
-                      content: Text('${widget.name} Added Successfully'),
-                    );
-                  },
-                );
+
+                Provider.of<CartProvider>(context, listen: false).addCartItem(context, cartItem);
+
+                // final cartItem = CartItem(
+                //   name: widget.name,
+                //   size: widget.size,
+                //   price: price,
+                //   image: widget.image,
+                //   cartons: cartons,
+                //   ordered: 'false',
+                //   uid: Const.uid,
+                //   adminId: widget.adminId,
+                //   cartId: Const.cartItemId,
+                // );
+                // myCart.products.add(cartItem);
+                // print(myCart.products[0].size);
+                // print('Cart length: ${myCart.products.length}');
+                // print('Cart length: ${myCart.products[0]}');
+
                 // setState(() {
                 //   DocumentReference documentReference = FirebaseFirestore
                 //       .instance

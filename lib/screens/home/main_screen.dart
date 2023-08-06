@@ -29,6 +29,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         onPageChanged: (index) {
           setState(() {
             _selectedItem = index;
@@ -37,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
         },
         children: [
           HomeScreen(),
-          Cart(),
+          CartScreen(),
           Profile(),
         ],
         controller: _pageController,

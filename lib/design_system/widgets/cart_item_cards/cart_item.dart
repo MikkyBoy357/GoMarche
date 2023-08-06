@@ -1,32 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_marche/app_localizations.dart';
+import 'package:go_marche/models/cart_item_model.dart';
 
-class CartItem extends StatelessWidget {
-  final String? name;
-  final String? size;
-  final int? price;
-  final String? image;
-  final int? cartons;
-  final String? ordered;
-  final String? uid;
-  final String? adminId;
-  final String? cartId;
-  final String? orderedTime;
-  final String? location;
+class CartItemCard extends StatelessWidget {
+  final CartItemModel cartItem;
+  final VoidCallback? onDelete;
 
-  const CartItem({
+  const CartItemCard({
     Key? key,
-    this.name,
-    this.size,
-    this.price,
-    this.image,
-    this.cartons,
-    this.ordered,
-    this.uid,
-    this.adminId,
-    this.cartId,
-    this.orderedTime,
-    this.location,
+    required this.cartItem,
+    this.onDelete,
   }) : super(key: key);
 
   @override
@@ -91,7 +74,7 @@ class CartItem extends StatelessWidget {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(16)),
                                 image: DecorationImage(
-                                  image: NetworkImage(image!),
+                                  image: NetworkImage(cartItem.image!),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -107,8 +90,8 @@ class CartItem extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  name != null
-                                      ? name.toString()
+                                  cartItem.name != null
+                                      ? cartItem.name.toString()
                                       : AppLocalizations.of(context)!
                                           .translate('name'),
                                   style: TextStyle(
@@ -118,7 +101,7 @@ class CartItem extends StatelessWidget {
                                   maxLines: 2,
                                 ),
                                 Text(
-                                  '$cartons ${AppLocalizations.of(context)!.translate('cartons')}',
+                                  '${cartItem.cartons} ${AppLocalizations.of(context)!.translate('cartons')}',
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -136,15 +119,15 @@ class CartItem extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  name != null ? '$size KG ' : 'Size ',
+                                  cartItem.name != null
+                                      ? '${cartItem.size} KG '
+                                      : 'Size ',
                                   style: TextStyle(
                                     fontSize: 18,
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () {
-                                    print("Remove Cart Item");
-                                  },
+                                  onTap: onDelete,
                                   child: Icon(
                                     Icons.cancel_outlined,
                                     color: Colors.redAccent,
@@ -163,7 +146,9 @@ class CartItem extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  price != null ? '$price' : 'Price',
+                                  cartItem.price != null
+                                      ? '${cartItem.price}'
+                                      : 'Price',
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,

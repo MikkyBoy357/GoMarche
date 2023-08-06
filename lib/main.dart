@@ -10,11 +10,17 @@ import 'package:provider/single_child_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_localizations.dart';
+import 'dependency_injection/locator.dart';
+import 'local_storage/local_db.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppLocalizations.getAppLang();
   print(await AppLocalizations.getAppLang());
+
+  await AppDependencies.register();
+  await AppDataBaseService.startService();
+
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -25,53 +31,52 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: providersList,
-      builder: (context, _) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'go_marche',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            appBarTheme: AppBarTheme(
-              color: Colors.white,
-              iconTheme: IconThemeData(
-                color: Colors.black,
+        providers: providersList,
+        builder: (context, _) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'go_marche',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+              appBarTheme: AppBarTheme(
+                color: Colors.white,
+                iconTheme: IconThemeData(
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
-          supportedLocales: [
-            Locale('en', 'UK'),
-            Locale('ku', 'IQ'),
-            Locale('ar', 'SA'),
-          ],
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          localeResolutionCallback: (locale, supportedLocales) {
-            for (var supportedLocale in supportedLocales) {
-              if (supportedLocale.languageCode == locale?.languageCode &&
-                  supportedLocale.countryCode == locale?.countryCode) {
-                return supportedLocale;
+            supportedLocales: [
+              Locale('en', 'UK'),
+              Locale('ku', 'IQ'),
+              Locale('ar', 'SA'),
+            ],
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            localeResolutionCallback: (locale, supportedLocales) {
+              for (var supportedLocale in supportedLocales) {
+                if (supportedLocale.languageCode == locale?.languageCode &&
+                    supportedLocale.countryCode == locale?.countryCode) {
+                  return supportedLocale;
+                }
               }
-            }
-            return supportedLocales.first;
-          },
-          // home: LoginScreen(),
-          home: buildHome(),
-          builder: (context, child) {
-            return Directionality(
-              textDirection: AppLocalizations.userLocale == 'en'
-                  ? TextDirection.ltr
-                  : TextDirection.rtl,
-              child: child!,
-            );
-          },
-        );
-      }
-    );
+              return supportedLocales.first;
+            },
+            // home: LoginScreen(),
+            home: buildHome(),
+            builder: (context, child) {
+              return Directionality(
+                textDirection: AppLocalizations.userLocale == 'en'
+                    ? TextDirection.ltr
+                    : TextDirection.rtl,
+                child: child!,
+              );
+            },
+          );
+        });
   }
 
   buildHome() {
