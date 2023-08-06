@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_marche/models/cart_item_model.dart';
 import 'package:go_marche/utils/boxes.dart';
+import 'package:go_marche/view_models/profile_provider.dart';
+import 'package:provider/provider.dart';
 
 class CartProvider extends ChangeNotifier {
   List<CartItemModel> cartItemList = [];
@@ -12,6 +14,9 @@ class CartProvider extends ChangeNotifier {
     print('====> Load CartItems List <====');
     cartItemList = Boxes.getCartItems().values.toList();
     print(cartItemList);
+    cartItemList.forEach((element) {
+      print(element.toJson());
+    });
     // notifyListeners();
   }
 
@@ -30,13 +35,16 @@ class CartProvider extends ChangeNotifier {
     // notifyListeners();
   }
 
-  void addCartItem(BuildContext context, CartItemModel cartItem) {
+  void addCartItem(BuildContext context, Map<String, dynamic> cartItemJson) {
+    final newCartItem = CartItemModel();
+
     final cartBox = Boxes.getCartItems();
-    cartBox.add(cartItem);
+    cartBox.add(newCartItem);
+
     Navigator.pop(context);
-    cartItem.save();
-    print('Added: ${cartItem.toJson()}');
-    print('${cartItem.name} added Succesfully');
+    newCartItem.save();
+    print('Added: ${newCartItem.toJson()}');
+    print('${newCartItem.name} added Succesfully');
     notifyListeners();
 
     showDialog(
@@ -44,7 +52,7 @@ class CartProvider extends ChangeNotifier {
       builder: (context) {
         return CupertinoAlertDialog(
           title: Text('SUCCESS'),
-          content: Text('${cartItem.name} Added Successfully'),
+          content: Text('${newCartItem.name} Added Successfully'),
         );
       },
     );
@@ -58,5 +66,28 @@ class CartProvider extends ChangeNotifier {
     loadCartList();
     calculateTotalPrice();
     notifyListeners();
+  }
+
+  void confirmOrder(BuildContext context) {
+    ProfileProvider profileProvider =
+        Provider.of<ProfileProvider>(context, listen: false);
+
+    final String? userLocation = profileProvider.userProfileData.location;
+    print("userLocation => ${userLocation}");
+    if (userLocation!.isEmpty || userLocation == "Location") {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: Text(
+              'Error',
+              style: TextStyle(color: Colors.red[900]),
+            ),
+            content: Text(
+                '\n\nPlease go to the profile page and update your profile'),
+          );
+        },
+      );
+    }
   }
 }

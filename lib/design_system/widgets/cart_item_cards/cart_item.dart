@@ -14,6 +14,7 @@ class CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("MyItem => ${cartItem.name}");
     return Stack(
       children: [
         Card(
@@ -74,7 +75,7 @@ class CartItemCard extends StatelessWidget {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(16)),
                                 image: DecorationImage(
-                                  image: NetworkImage(cartItem.image!),
+                                  image: NetworkImage(cartItem.image ?? ""),
                                   fit: BoxFit.cover,
                                 ),
                               ),

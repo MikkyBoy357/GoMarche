@@ -51,11 +51,8 @@ dependencies:
   shared_preferences: ^2.2.0
 
   # Cart dependencies
-  scoped_model:
   flutter_rating: ^0.0.2
-  sqflite:
-  path_provider:
-  localstorage:
+  path_provider: ^2.0.11
 
   hive: ^2.2.3
   hive_flutter: ^1.0.0

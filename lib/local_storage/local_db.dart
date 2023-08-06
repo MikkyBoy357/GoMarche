@@ -7,7 +7,8 @@ import '../models/cart_item_model.dart';
 
 class AppDataBaseService {
   bool _isInitialized = false;
-  static const String dbName = 'foodBox';
+  static const String dbName = 'cartBox';
+
   static Future<void> startService() async {
     Directory document = await getApplicationDocumentsDirectory();
     Hive.init(document.path);

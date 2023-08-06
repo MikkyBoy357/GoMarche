@@ -10,7 +10,6 @@ import 'package:go_marche/view_models/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app_localizations.dart';
-import 'cart/cartList.dart';
 
 class AddToCart extends StatefulWidget {
   final String adminId;
@@ -185,15 +184,15 @@ class _AddToCartState extends State<AddToCart> {
             Button1(
               label: 'Add to Cart',
               onPressed: () {
-                final cartItem = CartItemModel(
-                  name: widget.name,
-                  size: widget.size,
-                  price: price,
-                  image: widget.image,
-                  cartons: cartons,
-                );
+                final cartItemJson = {
+                  "name": widget.name,
+                  "size": widget.size,
+                  "price": price,
+                  "image": widget.image,
+                  "cartons": cartons,
+                };
 
-                Provider.of<CartProvider>(context, listen: false).addCartItem(context, cartItem);
+                Provider.of<CartProvider>(context, listen: false).addCartItem(context, cartItemJson);
 
                 // final cartItem = CartItem(
                 //   name: widget.name,

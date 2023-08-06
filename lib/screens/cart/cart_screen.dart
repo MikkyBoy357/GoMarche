@@ -9,11 +9,12 @@ import 'package:go_marche/design_system/text_styles/text_styles.dart';
 import 'package:go_marche/design_system/widgets/cart_item_cards/cart_item.dart';
 import 'package:go_marche/models/cart_item_model.dart';
 import 'package:go_marche/screens/cart/waiting_for_order.dart';
-import 'package:go_marche/screens/home/components/cart/cartList.dart';
 import 'package:go_marche/view_models/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../app_localizations.dart';
+import '../../dependency_injection/locator.dart';
+import '../../local_storage/local_db.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -205,7 +206,8 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 Builder(
                   builder: (context) {
-                    cartProvider.loadCartList();
+                    print('WAHALA => ${locator<AppDataBaseService>().getMikeList()[0].toJson()}');
+                    // cartProvider.loadCartList2();
                     if (cartProvider.cartItemList.isEmpty) {
                       return Expanded(
                         child: Container(
@@ -313,32 +315,24 @@ class _CartScreenState extends State<CartScreen> {
                                 color: Colors.white,
                               )),
                           onPressed: () {
+                            cartProvider.confirmOrder(context);
                             // print(snapshot.data['location']);
-                            if (profile == true) {
-                              // snapshot.data!['location'] == null
-                              //     ? showDialog(
-                              //         context: context,
-                              //         builder: (context) {
-                              //           return CupertinoAlertDialog(
-                              //             title: Text('Error'),
-                              //             content: Text(
-                              //                 '\n\nPlease go to the profile page and update your profile'),
-                              //           );
-                              //         },
-                              //       )
-                              //     : confirmOrders(snapshot.data!['location']);
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return CupertinoAlertDialog(
-                                    title: Text('Error'),
-                                    content: Text(
-                                        '\n\nPlease go to the profile page and update your profile'),
-                                  );
-                                },
-                              );
-                            }
+                            // if (profile == true) {
+                            //   // snapshot.data!['location'] == null
+                            //   //     ? showDialog(
+                            //   //         context: context,
+                            //   //         builder: (context) {
+                            //   //           return CupertinoAlertDialog(
+                            //   //             title: Text('Error'),
+                            //   //             content: Text(
+                            //   //                 '\n\nPlease go to the profile page and update your profile'),
+                            //   //           );
+                            //   //         },
+                            //   //       )
+                            //   //     : confirmOrders(snapshot.data!['location']);
+                            // } else {
+                            //
+                            // }
                           },
                           child: Text(
                             AppLocalizations.of(context)!

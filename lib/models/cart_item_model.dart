@@ -41,11 +41,11 @@ class CartItemModel extends HiveObject {
     // String? orderedTime,
     // String? location,
   }) {
-    _name = name;
-    _size = size;
-    _price = price;
-    _image = image;
-    _cartons = cartons;
+    name = name;
+    size = size;
+    price = price;
+    image = image;
+    cartons = cartons;
     // _ordered = ordered;
     // _uid = uid;
     // _adminId = adminId;
@@ -55,11 +55,11 @@ class CartItemModel extends HiveObject {
   }
 
   CartItemModel.fromJson(dynamic json) {
-    _name = json['name'];
-    _size = json['size'];
-    _price = json['price'];
-    _image = json['image'];
-    _cartons = json['cartons'];
+    name = json['name'];
+    size = json['size'];
+    price = json['price'];
+    image = json['image'];
+    cartons = json['cartons'];
     // _ordered = json['ordered'];
     // _uid = json['uid'];
     // _adminId = json['adminId'];
@@ -68,11 +68,11 @@ class CartItemModel extends HiveObject {
     // _location = json['location'];
   }
 
-  String? _name;
-  String? _size;
-  num? _price;
-  String? _image;
-  num? _cartons;
+  String? name;
+  String? size;
+  num? price;
+  String? image;
+  num? cartons;
   // String? _ordered;
   // String? _uid;
   // String? _adminId;
@@ -94,11 +94,11 @@ class CartItemModel extends HiveObject {
     // String? location,
   }) =>
       CartItemModel(
-        name: name ?? _name,
-        size: size ?? _size,
-        price: price ?? _price,
-        image: image ?? _image,
-        cartons: cartons ?? _cartons,
+        name: name ?? name,
+        size: size ?? size,
+        price: price ?? price,
+        image: image ?? image,
+        cartons: cartons ?? cartons,
         // ordered: ordered ?? _ordered,
         // uid: uid ?? _uid,
         // adminId: adminId ?? _adminId,
@@ -107,15 +107,15 @@ class CartItemModel extends HiveObject {
         // location: location ?? _location,
       );
 
-  String? get name => _name;
-
-  String? get size => _size;
-
-  num? get price => _price;
-
-  String? get image => _image;
-
-  num? get cartons => _cartons;
+  // String? get name => name;
+  //
+  // String? get size => size;
+  //
+  // num? get price => price;
+  //
+  // String? get image => image;
+  //
+  // num? get cartons => cartons;
 
   // String? get ordered => _ordered;
   //
@@ -131,11 +131,11 @@ class CartItemModel extends HiveObject {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['name'] = _name;
-    map['size'] = _size;
-    map['price'] = _price;
-    map['image'] = _image;
-    map['cartons'] = _cartons;
+    map['name'] = name;
+    map['size'] = size;
+    map['price'] = price;
+    map['image'] = image;
+    map['cartons'] = cartons;
     // map['ordered'] = _ordered;
     // map['uid'] = _uid;
     // map['adminId'] = _adminId;

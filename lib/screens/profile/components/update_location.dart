@@ -14,7 +14,7 @@ class UpdateLocation extends StatefulWidget {
 class _UpdateLocationState extends State<UpdateLocation> {
   String _location = '37.422062,-122.08406';
 
-  late String _plusCode;
+  String _plusCode = "";
 
   String _locationDecoded = '37.422062499999996,-122.08405859375';
 
@@ -45,11 +45,12 @@ class _UpdateLocationState extends State<UpdateLocation> {
     return await Geolocator.getCurrentPosition();
   }
 
-  // Future<String> _getPlusCode() async {
-  //   Position pos = await _getCurrentPosition();
-  //   // print('<<<<>>>> ${_getPlusCode(pos)}');
-  //   return olc.encode(pos.latitude, pos.longitude, codeLength: 12);
-  // }
+  Future<String> _getPlusCode() async {
+    Position pos = await _getCurrentPosition();
+    // print('<<<<>>>> ${_getPlusCode(pos)}');
+    // return olc.encode(pos.latitude, pos.longitude, codeLength: 12);
+    return pos.toJson().toString();
+  }
 
   // Position _getPosition(String from) {
   //   olc.CodeArea ca = olc.decode(from);
@@ -128,7 +129,7 @@ class _UpdateLocationState extends State<UpdateLocation> {
                     // textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       counterText: '',
-                      hintText: 'Store name',
+                      hintText: 'Location',
                       hintStyle: TextStyle(
                         fontSize: 20,
                         color: Colors.grey,
@@ -181,14 +182,14 @@ class _UpdateLocationState extends State<UpdateLocation> {
         child: Button1(
           label: 'Update',
           onPressed: () async {
-            // print('<<<<>>>> ${await _getPlusCode()}');
-            // await _getPlusCode();
-            // Position pos = await _getCurrentPosition();
-            // print('<<<<>>>> ${await _getPlusCode()}');
-            // _plusCode = await _getPlusCode();
+            print('<<<<>>>> ${await _getPlusCode()}');
+            await _getPlusCode();
+            Position pos = await _getCurrentPosition();
+            print('<<<<>>>> ${await _getPlusCode()}');
+            _plusCode = await _getPlusCode();
 
             // var mich = await _locateMe();
-            // Navigator.pop(context, _plusCode);
+            Navigator.pop(context, _plusCode);
             setState(() {
               DocumentReference documentReference = FirebaseFirestore.instance
                   .collection("users")
