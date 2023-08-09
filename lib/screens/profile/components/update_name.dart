@@ -80,7 +80,6 @@ class UpdateName extends StatelessWidget {
           label: 'Update',
           onPressed: () {
             Provider.of<ProfileProvider>(context, listen: false).updateUserProfileData(context, field: "name", newValue: name);
-            Navigator.pop(context);
           },
         ),
       ),

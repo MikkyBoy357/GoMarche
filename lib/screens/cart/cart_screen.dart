@@ -206,7 +206,6 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 Builder(
                   builder: (context) {
-                    print('WAHALA => ${locator<AppDataBaseService>().getMikeList()[0].toJson()}');
                     // cartProvider.loadCartList2();
                     if (cartProvider.cartItemList.isEmpty) {
                       return Expanded(
@@ -225,19 +224,22 @@ class _CartScreenState extends State<CartScreen> {
                           itemCount: cartProvider.cartItemList.length,
                           // ignore: missing_return
                           itemBuilder: (context, index) {
-                            CartItemModel currentCartItem = cartProvider.cartItemList[index];
+                            CartItemModel currentCartItem =
+                                cartProvider.cartItemList[index];
                             newIndex = index;
                             // return CartItem();
                             return Dismissible(
                               key: UniqueKey(),
                               onDismissed: (DismissDirection dismissDirection) {
-                                print("SlideToDismiss => Remove Cart Item => ${currentCartItem.name}");
+                                print(
+                                    "SlideToDismiss => Remove Cart Item => ${currentCartItem.name}");
                                 cartProvider.deleteCartItem(currentCartItem);
                               },
                               child: CartItemCard(
                                 cartItem: currentCartItem,
                                 onDelete: () {
-                                  print("Remove Cart Item => ${currentCartItem.name}");
+                                  print(
+                                      "Remove Cart Item => ${currentCartItem.name}");
                                   cartProvider.deleteCartItem(currentCartItem);
                                 },
                               ),
@@ -295,53 +297,45 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ],
                   ),
-                  StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(Const.uid)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.065,
-                        width: MediaQuery.of(context).size.width / 1.3,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              side: BorderSide(
-                                width: 2, // the thickness
-                                color:
-                                    MyColors.blue1, // the color of the border
-                              ),
-                              textStyle: TextStyle(
-                                color: Colors.white,
-                              )),
-                          onPressed: () {
-                            cartProvider.confirmOrder(context);
-                            // print(snapshot.data['location']);
-                            // if (profile == true) {
-                            //   // snapshot.data!['location'] == null
-                            //   //     ? showDialog(
-                            //   //         context: context,
-                            //   //         builder: (context) {
-                            //   //           return CupertinoAlertDialog(
-                            //   //             title: Text('Error'),
-                            //   //             content: Text(
-                            //   //                 '\n\nPlease go to the profile page and update your profile'),
-                            //   //           );
-                            //   //         },
-                            //   //       )
-                            //   //     : confirmOrders(snapshot.data!['location']);
-                            // } else {
-                            //
-                            // }
-                          },
-                          child: Text(
-                            AppLocalizations.of(context)!
-                                .translate('confirm_order'),
-                            style: TextStyle(fontSize: 20),
-                          ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.065,
+                    width: MediaQuery.of(context).size.width / 1.3,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        side: BorderSide(
+                          width: 2, // the thickness
+                          color: MyColors.blue1, // the color of the border
                         ),
-                      );
-                    },
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      onPressed: () {
+                        cartProvider.checkoutOrder(context);
+                        // print(snapshot.data['location']);
+                        // if (profile == true) {
+                        //   // snapshot.data!['location'] == null
+                        //   //     ? showDialog(
+                        //   //         context: context,
+                        //   //         builder: (context) {
+                        //   //           return CupertinoAlertDialog(
+                        //   //             title: Text('Error'),
+                        //   //             content: Text(
+                        //   //                 '\n\nPlease go to the profile page and update your profile'),
+                        //   //           );
+                        //   //         },
+                        //   //       )
+                        //   //     : confirmOrders(snapshot.data!['location']);
+                        // } else {
+                        //
+                        // }
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!
+                            .translate('checkout'),
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
                   ),
                 ],
               ),

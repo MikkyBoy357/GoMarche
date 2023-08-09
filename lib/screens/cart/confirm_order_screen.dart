@@ -1,50 +1,28 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:go_marche/design_system/button_widgets/buttons/blue_buttons/button1.dart';
-import 'package:go_marche/design_system/colors/colors.dart';
-import 'package:go_marche/design_system/const.dart';
-import 'package:go_marche/design_system/widgets/cart_item_cards/cart_item.dart';
+import 'package:go_marche/design_system/widgets/loading_dialog.dart';
 import 'package:go_marche/models/cart_item_model.dart';
-import 'package:go_marche/screens/home/main_screen.dart';
+import 'package:go_marche/view_models/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../app_localizations.dart';
-import '../../view_models/cart_provider.dart';
+import '../../design_system/button_widgets/buttons/blue_buttons/button1.dart';
+import '../../design_system/colors/colors.dart';
+import '../../design_system/widgets/cart_item_cards/cart_item.dart';
 
-class WaitingForOrders extends StatefulWidget {
-  final String? name;
-  final String? size;
-  final String? price;
-  final String? image;
-  final String? cartons;
-
-  const WaitingForOrders(
-      {Key? key, this.name, this.size, this.price, this.image, this.cartons})
-      : super(key: key);
+class ConfirmOrderScreen extends StatefulWidget {
+  const ConfirmOrderScreen({super.key});
 
   @override
-  _WaitingForOrdersState createState() => _WaitingForOrdersState();
+  State<ConfirmOrderScreen> createState() => _ConfirmOrderScreenState();
 }
 
-class _WaitingForOrdersState extends State<WaitingForOrders> {
-  int totalPrice = 0;
-
-  cartPrice() async {
-    QuerySnapshot snap = await FirebaseFirestore.instance
-        .collection('cartItems')
-        .where('uid', isEqualTo: Const.uid)
-        .where('delivered', isEqualTo: 'false')
-        .get();
-    for (QueryDocumentSnapshot doc in snap.docs) {
-      totalPrice += int.parse(doc['price']);
-    }
-    setState(() {});
-  }
-
+class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
   @override
-  initState() {
+  void initState() {
     super.initState();
-    cartPrice();
+    CartProvider cartViewModel =
+        Provider.of<CartProvider>(context, listen: false);
+    cartViewModel.calculateDeliveryFee();
   }
 
   @override
@@ -55,9 +33,8 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             elevation: 0,
-            automaticallyImplyLeading: false,
             title: Text(
-              "Order Finalized",
+              AppLocalizations.of(context)!.translate('confirm_order'),
               style: TextStyle(color: Colors.black),
             ),
           ),
@@ -70,7 +47,7 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20.0),
                     child: Text(
-                      "Your order is now PENDING",
+                      "Order Items",
                       style: TextStyle(
                         color: MyColors.black2,
                         fontSize: 36,
@@ -84,8 +61,7 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your order will be delivered to your store location ASAP. '
-                          'Click Done to return to the home screen.',
+                          'Please confirm that the items listed below are correct then click Confirm Order ',
                           style: TextStyle(
                             fontSize: 17,
                           ),
@@ -184,20 +160,30 @@ class _WaitingForOrdersState extends State<WaitingForOrders> {
                     ],
                   ),
                   Button1(
-                    label: AppLocalizations.of(context)!.translate('home'),
+                    label: AppLocalizations.of(context)!
+                        .translate('confirm_order'),
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return WillPopScope(
-                              onWillPop: () async {
-                                return false;
-                              },
-                              child: MainScreen(),
-                            );
-                          },
-                        ),
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return ConfirmDialog(
+                            title: "Finalize Order",
+                            body: "Are you sure you want to place this order?",
+                            onYes: () async {
+                              Navigator.pop(context);
+                              await cartProvider.finalizeOrder(this.context);
+                            },
+                          );
+                        },
                       );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) {
+                      //       return WaitingForOrders();
+                      //     },
+                      //   ),
+                      // );
                     },
                   ),
                 ],

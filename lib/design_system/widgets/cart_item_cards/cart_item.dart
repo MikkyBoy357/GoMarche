@@ -14,7 +14,6 @@ class CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("MyItem => ${cartItem.name}");
     return Stack(
       children: [
         Card(
@@ -121,19 +120,25 @@ class CartItemCard extends StatelessWidget {
                               children: [
                                 Text(
                                   cartItem.name != null
-                                      ? '${cartItem.size} KG '
+                                      ? '${cartItem.size} KG'
                                       : 'Size ',
                                   style: TextStyle(
                                     fontSize: 18,
                                   ),
                                 ),
-                                GestureDetector(
-                                  onTap: onDelete,
-                                  child: Icon(
-                                    Icons.cancel_outlined,
-                                    color: Colors.redAccent,
-                                  ),
-                                ),
+                                Builder(builder: (context) {
+                                  if (onDelete == null) {
+                                    return SizedBox();
+                                  } else {
+                                    return GestureDetector(
+                                      onTap: onDelete,
+                                      child: Icon(
+                                        Icons.cancel_outlined,
+                                        color: Colors.redAccent,
+                                      ),
+                                    );
+                                  }
+                                }),
                               ],
                             ),
                             Row(
@@ -156,9 +161,17 @@ class CartItemCard extends StatelessWidget {
                                     color: Colors.green[600],
                                   ),
                                 ),
-                                Icon(
-                                  Icons.cancel_outlined,
-                                  color: Colors.transparent,
+                                Builder(
+                                  builder: (context) {
+                                    if (onDelete == null) {
+                                      return SizedBox();
+                                    } else {
+                                      return Icon(
+                                        Icons.cancel_outlined,
+                                        color: Colors.transparent,
+                                      );
+                                    }
+                                  },
                                 ),
                               ],
                             ),

@@ -103,13 +103,9 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                     ),
-                    StreamBuilder(
-                      stream: FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(Const.uid)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
+                    Builder(
+                      builder: (context) {
+                        if (!profileProvider.userDataInitialized) {
                           return Center(
                             child: CircularProgressIndicator(),
                           );
@@ -222,9 +218,8 @@ class _ProfileState extends State<Profile> {
                                     style: MyTextStyles.profileTitle,
                                   ),
                                   subtitle: ProfileTextField(
-                                    hintText: profileProvider
-                                            .userProfileData.location ??
-                                        "Location",
+                                    hintText:
+                                        "${profileProvider.userProfileData.location?.latitude}, ${profileProvider.userProfileData.location?.longitude}",
                                     onChanged: (value) {
                                       // location = value;
                                       // print('location: $location');

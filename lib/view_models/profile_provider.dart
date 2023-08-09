@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_marche/design_system/widgets/loading_dialog.dart';
 
 import '../design_system/const.dart';
 import '../models/UserModel.dart';
@@ -9,6 +10,7 @@ import '../screens/home/main_screen.dart';
 
 class ProfileProvider extends ChangeNotifier {
   bool mich = false;
+  bool userDataInitialized = false;
   late UserModel userProfileData;
 
   Future<void> createProfileDoc() async {
@@ -16,11 +18,11 @@ class ProfileProvider extends ChangeNotifier {
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser?.uid);
     print('=========> RANDOM LOG HAHAHAHAHA');
-    Map<String, String> categories = {
+    Map<String, dynamic> categories = {
       "name": 'Name',
       "phoneNumber": 'Phone Number',
       "language": 'Language',
-      "location": 'Location',
+      "location": {"latitude": null},
       "storeName": 'StoreName',
     };
     print("=======> Firestore Mapping");
@@ -74,21 +76,23 @@ class ProfileProvider extends ChangeNotifier {
     userProfileData = UserModel.fromJson(tempJson);
     print("==userProfileData==>${userProfileData.toJson()}");
     print("====>getUserProfileData<====");
+    userDataInitialized = true;
     notifyListeners();
   }
 
   Future<void> updateUserProfileData(BuildContext context,
-      {required String field, required String newValue}) async {
+      {required String field, required dynamic newValue}) async {
     DocumentReference documentReference = FirebaseFirestore.instance
         .collection("users")
         .doc(FirebaseAuth.instance.currentUser!.uid);
     print('=========> RANDOM LOG HAHAHAHAHA');
-    Map<String, String> categories = {
+    Map<String, dynamic> categories = {
       field: newValue,
     };
     print("=======> Firestore Mapping");
     print(categories.toString());
-    documentReference.update(categories).whenComplete(
+    showLoadingDialog(context);
+    await documentReference.update(categories).whenComplete(
       () async {
         await showDialog(
           context: context,
@@ -103,6 +107,7 @@ class ProfileProvider extends ChangeNotifier {
     );
 
     // get profile data again
-    getUserProfileData();
+    await getUserProfileData();
+    Navigator.of(context).pop(context);
   }
 }

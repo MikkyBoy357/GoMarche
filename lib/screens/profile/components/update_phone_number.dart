@@ -110,8 +110,9 @@ class _UpdatePhoneNumberState extends State<UpdatePhoneNumber> {
           label: 'Update',
           onPressed: () {
             final phoneNumber = "+229${_phoneNumberController.text}";
-            Provider.of<ProfileProvider>(context, listen: false).updateUserProfileData(context, field: "phoneNumber", newValue: phoneNumber);
-            Navigator.pop(context);
+            Provider.of<ProfileProvider>(context, listen: false)
+                .updateUserProfileData(context,
+                    field: "phoneNumber", newValue: phoneNumber);
           },
         ),
       ),

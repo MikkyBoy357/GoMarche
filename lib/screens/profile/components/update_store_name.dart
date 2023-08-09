@@ -81,7 +81,6 @@ class UpdateStoreName extends StatelessWidget {
             await Provider.of<ProfileProvider>(context, listen: false)
                 .updateUserProfileData(context,
                     field: "storeName", newValue: storeName);
-            Navigator.pop(context);
           },
         ),
       ),
