@@ -10,6 +10,8 @@
   "checkout": "Checkout",
   "confirm_order": "أكد الطلب",
   "waiting_for_order": "في انتظار الطلب",
+  "order": "Order",
+  "order_history": "Order History",
   "update_profile": "تحديث الحساب",
   "no_otp": "لم تستلم الرمز الخاص بك؟",
   "resend_otp": "اضغط هنا لإعادة إرسال الرمز",

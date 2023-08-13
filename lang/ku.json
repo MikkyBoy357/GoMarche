@@ -10,6 +10,8 @@
   "checkout": "Checkout",
   "confirm_order": "داواکاریەکت بنێرە",
   "waiting_for_order": "چاوەرێی داواکاری",
+  "order": "Order",
+  "order_history": "Order History",
   "update_profile": "پرۆفایلت نوێ بکەوە",
   "no_otp": "کۆدەکەت بۆ نەهات؟",
   "resend_otp": "ئێرە داگرە بۆ ناردنەوەی کۆدەکە",

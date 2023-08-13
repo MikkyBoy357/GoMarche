@@ -17,6 +17,8 @@ import '../screens/cart/confirm_order_screen.dart';
 
 class CartProvider extends ChangeNotifier {
   List<CartItemModel> cartItemList = [];
+  List<OrderedItemModel> ordersList = [];
+
   num totalPrice = 0;
   num deliveryFee = 0;
   num numberOfItems = 0;
@@ -67,6 +69,16 @@ class CartProvider extends ChangeNotifier {
     cartItemList = Boxes.getCartItems().values.toList();
     // notifyListeners();
     return cartItemList;
+  }
+
+  Future<void> getOrderHistory() async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
+        .collection("orders")
+        .where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    //TODO: Get Orders for currentUser and put in a list
   }
 
   void calculateTotalPrice() {

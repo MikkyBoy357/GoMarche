@@ -10,6 +10,8 @@
   "checkout": "Checkout",
   "confirm_order": "Confirm Order",
   "waiting_for_order": "Waiting for Order",
+  "order": "Order",
+  "order_history": "Order History",
   "update_profile": "Update Profile",
   "no_otp": "Didn't receive your code?",
   "resend_otp": "Press here to resend code",

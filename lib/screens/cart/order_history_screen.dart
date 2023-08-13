@@ -1,64 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:go_marche/design_system/colors/colors.dart';
-import 'package:go_marche/design_system/text_styles/text_styles.dart';
-import 'package:go_marche/design_system/widgets/cart_item_cards/cart_item.dart';
-import 'package:go_marche/models/cart_item_model.dart';
-import 'package:go_marche/view_models/cart_provider.dart';
+import 'package:go_marche/models/ordered_item_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../app_localizations.dart';
-import 'order_history_screen.dart';
+import '../../design_system/colors/colors.dart';
+import '../../design_system/text_styles/text_styles.dart';
+import '../../design_system/widgets/cart_item_cards/order_card.dart';
+import '../../view_models/cart_provider.dart';
 
-class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+class OrderHistoryScreen extends StatefulWidget {
+  const OrderHistoryScreen({super.key});
 
   @override
-  _CartScreenState createState() => _CartScreenState();
+  State<OrderHistoryScreen> createState() => _OrderHistoryScreenState();
 }
 
-class _CartScreenState extends State<CartScreen> {
+class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   @override
   void initState() {
     super.initState();
     CartProvider cartViewModel =
         Provider.of<CartProvider>(context, listen: false);
-    cartViewModel.loadCartList();
+    cartViewModel.getOrderHistory();
   }
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<CartProvider>(context, listen: false).calculateTotalPrice();
-
     return Consumer<CartProvider>(
       builder: (context, CartProvider cartProvider, _) {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            automaticallyImplyLeading: false,
             elevation: 0,
             title: Text(
-              AppLocalizations.of(context)!.translate('cart'),
+              AppLocalizations.of(context)!.translate('order_history'),
               style: TextStyle(color: Colors.black),
             ),
-            actions: [
-              IconButton(
-                tooltip: "Order History",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return OrderHistoryScreen();
-                      },
-                    ),
-                  );
-                },
-                icon: Icon(
-                  Icons.history,
-                  color: MyColors.blue1,
-                ),
-              ),
-            ],
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -68,7 +45,7 @@ class _CartScreenState extends State<CartScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Text(
-                    AppLocalizations.of(context)!.translate('cart'),
+                    AppLocalizations.of(context)!.translate('order'),
                     style: TextStyle(
                       color: MyColors.black2,
                       fontSize: 36,
@@ -93,27 +70,12 @@ class _CartScreenState extends State<CartScreen> {
                     } else {
                       return Expanded(
                         child: ListView.builder(
-                          itemCount: cartProvider.cartItemList.length,
-                          // ignore: missing_return
+                          itemCount: cartProvider.ordersList.length,
                           itemBuilder: (context, index) {
-                            CartItemModel currentCartItem =
-                                cartProvider.cartItemList[index];
-                            // return CartItem();
-                            return Dismissible(
-                              key: UniqueKey(),
-                              onDismissed: (DismissDirection dismissDirection) {
-                                print(
-                                    "SlideToDismiss => Remove Cart Item => ${currentCartItem.name}");
-                                cartProvider.deleteCartItem(currentCartItem);
-                              },
-                              child: CartItemCard(
-                                cartItem: currentCartItem,
-                                onDelete: () {
-                                  print(
-                                      "Remove Cart Item => ${currentCartItem.name}");
-                                  cartProvider.deleteCartItem(currentCartItem);
-                                },
-                              ),
+                            OrderedItemModel currentOrderedItem =
+                                cartProvider.ordersList[index];
+                            return OrderCard(
+                              orderedItem: currentOrderedItem,
                             );
                           },
                         ),

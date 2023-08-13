@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_marche/design_system/colors/colors.dart';
 import 'package:go_marche/design_system/const.dart';
 import 'package:go_marche/design_system/widgets/brand_card.dart';
 import 'package:go_marche/design_system/widgets/category_card.dart';
-import 'package:go_marche/design_system/widgets/search_bar.dart';
 import 'package:go_marche/screens/home/components/pageviews/brand_view.dart';
-import '../../filter_screen.dart';
-import '../../search_screen.dart';
+
+import '../../../app_localizations.dart';
 import 'pageviews/category_view.dart';
 
 class HomeScreen extends StatefulWidget {
   static var uid = FirebaseAuth.instance.currentUser!.uid;
 
   const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -40,94 +40,45 @@ class _HomeScreenState extends State<HomeScreen> {
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
         backgroundColor: Colors.white,
-        title: SearchBar(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return Search();
-                },
-              ),
-            );
-            print('search');
-          },
-          hintText: 'Search',
-          icon: Icon(
-            CupertinoIcons.search,
-            color: Colors.grey[600],
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: GestureDetector(
-              child: Text(
-                'Filter',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) {
-                //       return Filter();
-                //     },
-                //   ),
-                // );
-              },
-            ),
-          ),
-          Container(width: 10),
-        ],
+        title: Text(AppLocalizations.of(context)!.translate('home'), style: TextStyle(color: Colors.black),),
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 0, left: 20, right: 20),
         child: Column(
           children: [
             Container(
-              height: 30,
+              width: MediaQuery.of(context).size.width,
+              // height: 30,
+              decoration: BoxDecoration(
+                color: MyColors.black3,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: EdgeInsets.all(5),
               child: Row(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedItem = 'Category';
-                        print(selectedItem);
-                      });
-                    },
-                    child: Text(
-                      'Category',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: selectedItem == 'Category'
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                        fontSize: 20,
-                      ),
+                  Expanded(
+                    child: MyHomeTabTile(
+                      currentItem: "Category",
+                      selectedItem: selectedItem,
+                      onTap: () {
+                        setState(() {
+                          selectedItem = 'Category';
+                          print(selectedItem);
+                        });
+                      },
                     ),
                   ),
                   Container(width: 20),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedItem = 'Brand';
-                        print(selectedItem);
-                      });
-                    },
-                    child: Text(
-                      'Brand',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: selectedItem == 'Brand'
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                        fontSize: 20,
-                      ),
+                  Expanded(
+                    child: MyHomeTabTile(
+                      currentItem: "Brand",
+                      selectedItem: selectedItem,
+                      onTap: () {
+                        setState(() {
+                          selectedItem = 'Brand';
+                          print(selectedItem);
+                        });
+                      },
                     ),
                   ),
                 ],
@@ -166,8 +117,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     MaterialPageRoute(
                                       builder: (context) {
                                         return CategoryView(
-                                          categoryName: snapshot
-                                              .data!.docs[index]['categoryName'],
+                                          categoryName: snapshot.data!
+                                              .docs[index]['categoryName'],
                                         );
                                       },
                                     ),
@@ -222,6 +173,45 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyHomeTabTile extends StatelessWidget {
+  final String selectedItem;
+  final String currentItem;
+  final VoidCallback onTap;
+
+  const MyHomeTabTile({
+    super.key,
+    required this.selectedItem,
+    required this.currentItem,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: selectedItem == currentItem ? Colors.white : MyColors.black3,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Center(
+          child: Text(
+            currentItem,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: selectedItem == currentItem
+                  ? FontWeight.bold
+                  : FontWeight.normal,
+              fontSize: 20,
+            ),
+          ),
         ),
       ),
     );
