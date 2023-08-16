@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:hive/hive.dart';
 
 part 'cart_item_model.g.dart';
@@ -21,7 +19,7 @@ class CartItemModel extends HiveObject {
   @HiveField(0)
   String? name;
   @HiveField(1)
-  String? size;
+  num? size;
   @HiveField(2)
   num? price;
   @HiveField(3)

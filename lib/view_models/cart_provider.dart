@@ -79,6 +79,14 @@ class CartProvider extends ChangeNotifier {
         .get();
 
     //TODO: Get Orders for currentUser and put in a list
+    ordersList.clear();
+    final List<QueryDocumentSnapshot<Map<String, dynamic>>> tempDocs =
+        querySnapshot.docs;
+
+    for (var doc in tempDocs) {
+      print(doc.data());
+      ordersList.add(OrderedItemModel.fromJson(doc.data()));
+    }
   }
 
   void calculateTotalPrice() {

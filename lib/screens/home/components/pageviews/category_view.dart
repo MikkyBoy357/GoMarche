@@ -34,8 +34,8 @@ class CategoryView extends StatelessWidget {
           children: [
             StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection(categoryName)
-                  .where('categoryId', isEqualTo: categoryName)
+                  .collection('products')
+                  .where('categories', arrayContains: categoryName)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
@@ -82,9 +82,10 @@ class CategoryView extends StatelessWidget {
                                             Radius.circular(16)),
                                         image: DecorationImage(
                                           image:
-                                          // (snapshot.data!.docs[index]['image'] == '')
-                                          //     ? AssetImage('images/image.png'):
-                                          NetworkImage(snapshot.data!.docs[index]['image']),
+                                              // (snapshot.data!.docs[index]['image'] == '')
+                                              //     ? AssetImage('images/image.png'):
+                                              NetworkImage(snapshot
+                                                  .data!.docs[index]['image']),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -141,8 +142,7 @@ class CategoryView extends StatelessWidget {
                                                               ['size'] ==
                                                           ''
                                                       ? 'Size'
-                                                      : snapshot.data!
-                                                          .docs[index]['size'],
+                                                      : "${snapshot.data!.docs[index]['size'].toString()}KG",
                                                   style: TextStyle(
                                                     fontSize: 20,
                                                   ),
@@ -162,9 +162,11 @@ class CategoryView extends StatelessWidget {
                                                                   ['price'] ==
                                                               ''
                                                           ? 'Price'
-                                                          : snapshot.data!
-                                                                  .docs[index]
-                                                              ['price'],
+                                                          : snapshot
+                                                              .data!
+                                                              .docs[index]
+                                                                  ['price']
+                                                              .toString(),
                                                       style: TextStyle(
                                                         fontSize: 18,
                                                         fontWeight:
@@ -185,7 +187,7 @@ class CategoryView extends StatelessWidget {
                             ),
                           ),
                           onTap: () {
-                             showModalBottomSheet(
+                            showModalBottomSheet(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(16),
@@ -202,12 +204,12 @@ class CategoryView extends StatelessWidget {
                                   builder: (BuildContext context,
                                       ScrollController scrollController) {
                                     return AddToCart(
-                                      adminId: snapshot.data!.docs[index]
-                                          ['adminId'],
                                       name: snapshot.data!.docs[index]['name'],
                                       size: snapshot.data!.docs[index]['size'],
-                                      price: snapshot.data!.docs[index]['price'],
-                                      image: snapshot.data!.docs[index]['image'],
+                                      price: snapshot.data!.docs[index]
+                                          ['price'],
+                                      image: snapshot.data!.docs[index]
+                                          ['image'],
                                     );
                                   },
                                 );

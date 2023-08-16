@@ -1,21 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_marche/design_system/button_widgets/buttons/blue_buttons/button1.dart';
 import 'package:go_marche/design_system/colors/colors.dart';
 import 'package:go_marche/design_system/const.dart';
-import 'package:go_marche/design_system/widgets/cart_item_cards/cart_item.dart';
-import 'package:go_marche/models/cart_item_model.dart';
 import 'package:go_marche/view_models/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app_localizations.dart';
 
 class AddToCart extends StatefulWidget {
-  final String adminId;
   final String name;
-  final String size;
-  final String price;
+  final num size;
+  final num price;
   final String image;
 
   const AddToCart({
@@ -24,7 +20,6 @@ class AddToCart extends StatefulWidget {
     required this.size,
     required this.price,
     required this.image,
-    required this.adminId,
   }) : super(key: key);
 
   @override
@@ -38,7 +33,7 @@ class _AddToCartState extends State<AddToCart> {
   @override
   void initState() {
     super.initState();
-    price = int.parse(widget.price) * cartons;
+    price = int.parse(widget.price.toString()) * cartons;
     setState(() {});
   }
 
@@ -46,7 +41,6 @@ class _AddToCartState extends State<AddToCart> {
   Widget build(BuildContext context) {
     var realCartId = "${Const.uid}" + "${DateTime.now().second}";
 
-    print('AdminId: ${widget.adminId}');
     return Container(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -78,7 +72,7 @@ class _AddToCartState extends State<AddToCart> {
               ),
             ),
             Text(
-              widget.size,
+              "${widget.size}KG",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -148,7 +142,8 @@ class _AddToCartState extends State<AddToCart> {
                                     ? cartons = cartons - 1
                                     : cartons = cartons;
                                 print('$cartons Cartons');
-                                price = int.parse(widget.price) * cartons;
+                                price = int.parse(widget.price.toString()) *
+                                    cartons;
                               });
                             },
                             child: Icon(
@@ -164,7 +159,8 @@ class _AddToCartState extends State<AddToCart> {
                               setState(() {
                                 cartons <= 99 ? cartons++ : cartons = cartons;
                                 print('$cartons Cartons');
-                                price = int.parse(widget.price) * cartons;
+                                price = int.parse(widget.price.toString()) *
+                                    cartons;
                                 print('Price $price');
                               });
                             },
@@ -192,58 +188,8 @@ class _AddToCartState extends State<AddToCart> {
                   "cartons": cartons,
                 };
 
-                Provider.of<CartProvider>(context, listen: false).addCartItem(context, cartItemJson);
-
-                // final cartItem = CartItem(
-                //   name: widget.name,
-                //   size: widget.size,
-                //   price: price,
-                //   image: widget.image,
-                //   cartons: cartons,
-                //   ordered: 'false',
-                //   uid: Const.uid,
-                //   adminId: widget.adminId,
-                //   cartId: Const.cartItemId,
-                // );
-                // myCart.products.add(cartItem);
-                // print(myCart.products[0].size);
-                // print('Cart length: ${myCart.products.length}');
-                // print('Cart length: ${myCart.products[0]}');
-
-                // setState(() {
-                //   DocumentReference documentReference = FirebaseFirestore
-                //       .instance
-                //       .collection("cartItems")
-                //       .doc(realCartId);
-                //   print('=========> RANDOM LOG HAHAHAHAHA');
-                //   print(Const.cartItemId);
-                //   Map<String, dynamic> categories = {
-                //     "name": widget.name,
-                //     "size": widget.size,
-                //     "price": price,
-                //     "image": widget.image,
-                //     "cartons": cartons,
-                //     "ordered": 'false',
-                //     "uid": Const.uid,
-                //     "adminId": widget.adminId,
-                //     "cartId": Const.cartItemId,
-                //   };
-                //   print("=======> Firestore Mapping");
-                //   print(categories.toString());
-                //   documentReference.set(categories).whenComplete(
-                //     () {
-                //       showDialog(
-                //         context: context,
-                //         builder: (context) {
-                //           return CupertinoAlertDialog(
-                //             title: Text('SUCCESS'),
-                //             content: Text('${widget.name} Added Successfully'),
-                //           );
-                //         },
-                //       );
-                //     },
-                //   );
-                // });
+                Provider.of<CartProvider>(context, listen: false)
+                    .addCartItem(context, cartItemJson);
               },
             ),
             Container(

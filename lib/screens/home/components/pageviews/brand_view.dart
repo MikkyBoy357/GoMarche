@@ -200,8 +200,6 @@ class BrandView extends StatelessWidget {
                                   builder: (BuildContext context,
                                       ScrollController scrollController) {
                                     return AddToCart(
-                                      adminId: snapshot.data!.docs[index]
-                                          ['adminId'],
                                       name: snapshot.data!.docs[index]['name'],
                                       size: snapshot.data!.docs[index]['size'],
                                       price: snapshot.data!.docs[index]
