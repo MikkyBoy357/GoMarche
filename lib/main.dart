@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:go_marche/firebase_options.dart';
 import 'package:go_marche/screens/home/main_screen.dart';
 import 'package:go_marche/screens/language_screen.dart';
 import 'package:go_marche/utils/providers_list.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_localizations.dart';
 import 'dependency_injection/locator.dart';
@@ -21,7 +20,7 @@ void main() async {
   await AppDependencies.register();
   await AppDataBaseService.startService();
 
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
